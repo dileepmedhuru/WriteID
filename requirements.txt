@@ -9,3 +9,5 @@ scikit-learn
 Pillow
 gunicorn
 scikit-image
+Flask-CORS
+
