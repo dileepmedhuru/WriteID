@@ -8,4 +8,4 @@ matplotlib
 scikit-learn
 Pillow
 gunicorn
- 
+scikit-image
