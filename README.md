@@ -118,10 +118,5 @@ python backend/app.py
 ✅ Improve handwriting matching accuracy using **CNN-based models**  
 ✅ Implement **real-time handwriting recognition**  
 ✅ Deploy as a **full-stack web application**  
+ 
 
-## **📜 License**
-This project is open-source under the **MIT License**.  
-
----
-
-This updated description aligns with your **current directory structure** and provides clear **installation steps**. Let me know if you need any modifications! 🚀
