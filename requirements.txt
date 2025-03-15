@@ -7,4 +7,5 @@ pandas
 matplotlib
 scikit-learn
 Pillow
+gunicorn
  
