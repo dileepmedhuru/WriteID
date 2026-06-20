@@ -1787,10 +1787,114 @@ button:hover {
     padding-top: 96px;
 }
 
-@media (max-width: 600px) {
-    .app-navbar { padding: 0 16px; width: 95%; }
-    .app-navbar-brand .brand-name { font-size: 18px; }
+@media (max-width: 768px) {
+    .app-navbar {
+        padding: 0 20px;
+        width: 92%;
+        height: 56px;
+        border-radius: 28px;
+    }
+    
+    .app-navbar-brand .brand-name {
+        font-size: 18px;
+    }
+
+    .app-nav-hamburger {
+        display: flex;
+    }
+
+    .app-navbar-right {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 66px;
+        left: 0;
+        right: 0;
+        background: rgba(8, 12, 22, 0.98);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 20px;
+        gap: 16px;
+        align-items: stretch;
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .app-navbar-right.active {
+        display: flex;
+    }
+
+    .app-navbar-right .nav-link {
+        padding: 12px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .app-navbar-right .user-status {
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .app-navbar-right .user-name {
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .app-navbar-right .logout-btn {
+        width: 100%;
+        padding: 10px;
+        border-radius: 12px;
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+        text-align: center;
+        color: #ef4444;
+        font-weight: 700;
+    }
 }
+
+.app-nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 20px;
+    height: 14px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+
+.app-nav-hamburger span {
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.app-nav-hamburger.open span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.app-nav-hamburger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.app-nav-hamburger.open span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
 
 /* =====================================================================
    PDF DOWNLOAD BUTTON & REPORT ACTION ROW

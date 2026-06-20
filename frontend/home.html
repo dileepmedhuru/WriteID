@@ -10,101 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Rochester&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        /* Shared Floating Navbar for inner pages */
-        .app-navbar {
-            position: fixed;
-            top: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 92%;
-            max-width: 1200px;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 28px;
-            height: 64px;
-            border-radius: 50px;
-            background: rgba(8, 12, 22, 0.92);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            transition: all 0.4s ease;
-        }
 
-        .app-navbar.scrolled {
-            background: rgba(5, 8, 18, 0.98);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
-        }
-
-        .app-navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-        }
-
-        .app-navbar-brand img {
-            height: 40px;
-            width: auto;
-        }
-
-        .app-navbar-brand .brand-name {
-            font-size: 22px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #60a5fa, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .app-navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .app-nav-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 30px;
-            padding: 6px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #f3f4f6;
-        }
-
-        .app-nav-user i { color: #60a5fa; }
-
-        .app-nav-logout {
-            background: transparent;
-            border: 1px solid rgba(239,68,68,0.3);
-            border-radius: 30px;
-            color: #ef4444;
-            font-size: 13px;
-            font-weight: 700;
-            cursor: pointer;
-            padding: 7px 16px;
-            height: auto;
-            width: auto;
-            margin: 0;
-            transition: all 0.25s;
-        }
-
-        .app-nav-logout:hover {
-            background: rgba(239,68,68,0.1);
-            border-color: rgba(239,68,68,0.5);
-            color: #f87171;
-        }
-
-        /* Page body with nav offset */
-        .page-with-nav {
-            padding-top: 96px;
-        }
 
         /* Dashboard content */
         .dashboard-hero {
@@ -152,6 +58,9 @@
         <div class="app-navbar-right" id="nav-menu">
             <!-- Filled by script.js -->
         </div>
+        <button class="app-nav-hamburger" id="appNavHamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
     </nav>
 
     <div class="home page-with-nav">

@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const API_BASE = window.location.protocol === "file:" ? "http://127.0.0.1:5000" : "";
     let sampleFile = null;
     let handwritingFile = null;
 
@@ -67,6 +68,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Toggle mobile menu for app-navbar
+    const appNavHamburger = document.getElementById("appNavHamburger");
+    if (appNavHamburger && navMenuEl) {
+        appNavHamburger.addEventListener("click", function () {
+            appNavHamburger.classList.toggle("open");
+            navMenuEl.classList.toggle("active");
+        });
+        
+        // Close menu when a link inside it is clicked
+        navMenuEl.addEventListener("click", function (e) {
+            if (e.target.classList.contains("nav-link") || e.target.id === "logout-btn") {
+                appNavHamburger.classList.remove("open");
+                navMenuEl.classList.remove("active");
+            }
+        });
+    }
+
+    // Scroll effect for app-navbar
+    const appNavbar = document.getElementById("appNavbar");
+    if (appNavbar) {
+        window.addEventListener("scroll", function () {
+            appNavbar.classList.toggle("scrolled", window.scrollY > 40);
+        });
+    }
+
     // Populate Profile Page details if on profile page
     if (currentPage === "profile.html") {
         const usernameEl = document.getElementById("profile-username");
@@ -107,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (errorEl) errorEl.innerText = "";
 
             try {
-                const response = await fetch("/login", {
+                const response = await fetch(`${API_BASE}/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email: emailInput, password: passwordInput })
@@ -150,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             try {
-                const response = await fetch("/signup", {
+                const response = await fetch(`${API_BASE}/signup`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username: usernameInput, email: emailInput, password: passwordInput })
@@ -334,7 +360,7 @@ document.addEventListener("DOMContentLoaded", function () {
             formData.append("handwriting", handwritingFile);
             formData.append("mode", mode);
 
-            fetch("/process-handwriting", {
+            fetch(`${API_BASE}/process-handwriting`, {
                 method: "POST",
                 body: formData
             })
