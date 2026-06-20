@@ -23,44 +23,52 @@ except ImportError:
 def get_db_connection():
     db_url = os.environ.get("DATABASE_URL")
     if db_url and HAS_POSTGRES:
-        # Use PostgreSQL on Render
-        conn = psycopg2.connect(db_url)
-        return conn, "%s"
-    else:
-        # Fallback to local SQLite
-        conn = sqlite3.connect("users.db")
-        return conn, "?"
+        try:
+            # Use PostgreSQL on Render
+            conn = psycopg2.connect(db_url)
+            return conn, "%s"
+        except Exception as e:
+            print(f"[WARNING] PostgreSQL connection failed, falling back to SQLite: {e}")
+    
+    # Fallback to local SQLite
+    conn = sqlite3.connect("users.db")
+    return conn, "?"
 
 def init_db():
     conn = None
     try:
         db_url = os.environ.get("DATABASE_URL")
         if db_url and HAS_POSTGRES:
-            conn = psycopg2.connect(db_url)
-            cursor = conn.cursor()
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS users (
-                    id SERIAL PRIMARY KEY,
-                    username VARCHAR(100) UNIQUE NOT NULL,
-                    email VARCHAR(100) UNIQUE NOT NULL,
-                    password VARCHAR(255) NOT NULL
-                )
-            """)
-            conn.commit()
-            print("[INFO] PostgreSQL database initialized.")
-        else:
-            conn = sqlite3.connect("users.db")
-            cursor = conn.cursor()
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS users (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    username TEXT UNIQUE NOT NULL,
-                    email TEXT UNIQUE NOT NULL,
-                    password TEXT NOT NULL
-                )
-            """)
-            conn.commit()
-            print("[INFO] SQLite database initialized.")
+            try:
+                conn = psycopg2.connect(db_url)
+                cursor = conn.cursor()
+                cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS users (
+                        id SERIAL PRIMARY KEY,
+                        username VARCHAR(100) UNIQUE NOT NULL,
+                        email VARCHAR(100) UNIQUE NOT NULL,
+                        password VARCHAR(255) NOT NULL
+                    )
+                """)
+                conn.commit()
+                print("[INFO] PostgreSQL database initialized.")
+                return
+            except Exception as e:
+                print(f"[WARNING] PostgreSQL init failed, falling back to SQLite: {e}")
+
+        # SQLite fallback
+        conn = sqlite3.connect("users.db")
+        cursor = conn.cursor()
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE NOT NULL,
+                email TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL
+            )
+        """)
+        conn.commit()
+        print("[INFO] SQLite database initialized.")
     except Exception as e:
         print(f"[ERROR] Database init failed: {e}")
     finally:
