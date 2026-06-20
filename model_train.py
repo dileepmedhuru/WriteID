@@ -22,8 +22,7 @@ elif isinstance(data, dict):
     label_map = data.get('label_map', {i: i for i in np.unique(y_train)})
 else:
     raise ValueError("Unexpected data format in 'preprocessed_data.pkl'.")
-
-print("✅ Data loaded successfully!")
+print("[OK] Data loaded successfully!")
 
 # ✅ Step 2: Define CNN Model (Using Pure Keras)
 model = Sequential([
@@ -56,4 +55,4 @@ model.save('writeid_model.h5')
 with open('label_map.pkl', 'wb') as file:
     pickle.dump(label_map, file)
 
-print("✅ Model training completed and saved as 'writeid_model.h5'")
+print("[OK] Model training completed and saved as 'writeid_model.h5'")

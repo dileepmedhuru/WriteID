@@ -20,10 +20,10 @@ def load_data(data_dir):
 
     # Debugging: Check if path exists
     if not os.path.exists(data_dir):
-        print(f"❌ Path NOT found: {data_dir}")
+        print(f"[ERROR] Path NOT found: {data_dir}")
         return None, None, None
 
-    print(f"✅ Loading dataset from: {data_dir}")
+    print(f"[INFO] Loading dataset from: {data_dir}")
     
     # Iterate through each person's folder
     for person in os.listdir(data_dir):
@@ -39,7 +39,7 @@ def load_data(data_dir):
                 img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)  # Convert to grayscale
                 
                 if img is None:
-                    print(f"⚠ Skipping invalid image: {img_path}")
+                    print(f"[WARNING] Skipping invalid image: {img_path}")
                     continue
                 
                 img = cv2.resize(img, IMAGE_SIZE)  # Resize image
@@ -52,7 +52,7 @@ def load_data(data_dir):
     X = np.array(X).reshape(-1, IMAGE_SIZE[0], IMAGE_SIZE[1], 1)  # Reshape for CNN
     y = np.array(y)
 
-    print(f"✅ Loaded {len(X)} images from {len(label_map)} classes.")
+    print(f"[INFO] Loaded {len(X)} images from {len(label_map)} classes.")
     return X, y, label_map
 
 # Load and preprocess dataset
@@ -71,6 +71,6 @@ print("y_test:", y_test.shape)
 if X_train is not None and y_train is not None:
     with open("preprocessed_data.pkl", "wb") as f:
         pickle.dump((X_train, X_test, y_train, y_test, label_map), f)  # Save all data
-    print("✅ Preprocessed data saved as 'preprocessed_data.pkl'.")
+    print("[INFO] Preprocessed data saved as 'preprocessed_data.pkl'.")
 else:
-    print("❌ Data preprocessing failed. Check dataset structure.")
+    print("[ERROR] Data preprocessing failed. Check dataset structure.")

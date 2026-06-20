@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+.Python
+
+# Virtual environment
+venv/
+env/
+.env/
+ENV/
+
+# Environment variables
+.env
+*.env
+
+# Database (local dev only — Render will use ephemeral storage)
+users.db
+
+# Uploaded images (ephemeral, not committed)
+backend/uploads/
+frontend/uploads/
+
+# ML model cache (downloaded at runtime by Keras)
+.keras/
+*.h5
+*.hdf5
+saved_model/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/

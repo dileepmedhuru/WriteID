@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - WriteID</title>
+    <link rel="icon" type="image/png" href="logo_transparent.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Rochester&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="nav-top-mask" style="position:fixed;top:0;left:0;right:0;height:16px;background:#080c14;z-index:999;pointer-events:none;"></div>
+    <div class="bg-glow-container">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+    <div class="bg-grid-overlay"></div>
+    <div class="home">
+        <div class="rectangle">
+            <a href="index.html" class="logo-link">
+                <div class="left">
+                    <img src="logo_transparent.png" class="left">
+                </div>
+                <div class="right">
+                    <h1>WriteID</h1>
+                </div>
+            </a>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+            </div>
+        </div>
+
+        <div class="auth-container">
+            <div class="auth-card">
+                <h2>Create Account</h2>
+                <p class="auth-subtitle">Register for handwriting verification access</p>
+                
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" required placeholder="Choose a username">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required placeholder="Choose an email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" required placeholder="Choose a password (min 4 characters)">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" required placeholder="Confirm your password">
+                    </div>
+                    
+                    <button type="submit" class="auth-btn">Sign Up</button>
+                </form>
+                
+                <p class="auth-switch">Already have an account? <a href="login.html">Login</a></p>
+                <p id="auth-error" class="error-msg"></p>
+                <p id="auth-success" class="success-msg"></p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="quots">Handwriting<br>Recognition</div>
+            <div class="summary">We will detect<br>who are you</div>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>

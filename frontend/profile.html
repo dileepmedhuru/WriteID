@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - WriteID</title>
+    <link rel="icon" type="image/png" href="logo_transparent.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Rochester&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+<div id="nav-top-mask" style="position:fixed;top:0;left:0;right:0;height:16px;background:#080c14;z-index:999;pointer-events:none;"></div>
+    <div class="bg-glow-container">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+    <div class="bg-grid-overlay"></div>
+    <div class="home">
+        <div class="rectangle">
+            <a href="home.html" class="logo-link">
+                <div class="left">
+                    <img src="logo_transparent.png" class="left">
+                </div>
+                <div class="right">
+                    <h1>WriteID</h1>
+                </div>
+            </a>
+            <div class="nav-menu" id="nav-menu">
+                <a href="home.html" class="nav-link">Home</a>
+            </div>
+        </div>
+
+        <div class="profile-container">
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <i class="bi bi-person-circle"></i>
+                </div>
+                <h2>User Profile</h2>
+                <p class="profile-subtitle">Manage your WriteID credentials</p>
+                
+                <div class="profile-details">
+                    <div class="profile-row">
+                        <span class="profile-label">Username</span>
+                        <span class="profile-value" id="profile-username">-</span>
+                    </div>
+                    <div class="profile-row">
+                        <span class="profile-label">Email Address</span>
+                        <span class="profile-value" id="profile-email">-</span>
+                    </div>
+                    <div class="profile-row">
+                        <span class="profile-label">Account Status</span>
+                        <span class="profile-value status-badge" id="profile-status">Active User</span>
+                    </div>
+                </div>
+                
+                <div class="profile-actions">
+                    <button class="profile-btn primary" onclick="window.location.href='upload.html'">Upload Handwriting</button>
+                    <button class="profile-btn secondary" onclick="window.location.href='home.html'">Go Home</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="quots">Handwriting<br>Recognition</div>
+            <div class="summary">We will detect<br>who are you</div>
+        </div>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>

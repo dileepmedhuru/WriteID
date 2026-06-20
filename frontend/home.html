@@ -3,37 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WriteID</title>
-    <link rel="icon" type="img/png" href="https://res.cloudinary.com/dswdzotlp/image/upload/v1741974730/Group_6_gjgpla.png">
+    <title>Dashboard – WriteID</title>
+    <meta name="description" content="WriteID Dashboard – Choose between Handwriting Identification and Signature Verification.">
+    <link rel="icon" type="image/png" href="logo_transparent.png">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Rochester&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Rochester&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* Shared Floating Navbar for inner pages */
+        .app-navbar {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            max-width: 1200px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 28px;
+            height: 64px;
+            border-radius: 50px;
+            background: rgba(8, 12, 22, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s ease;
+        }
+
+        .app-navbar.scrolled {
+            background: rgba(5, 8, 18, 0.98);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+        }
+
+        .app-navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .app-navbar-brand img {
+            height: 40px;
+            width: auto;
+        }
+
+        .app-navbar-brand .brand-name {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .app-navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .app-nav-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            padding: 6px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #f3f4f6;
+        }
+
+        .app-nav-user i { color: #60a5fa; }
+
+        .app-nav-logout {
+            background: transparent;
+            border: 1px solid rgba(239,68,68,0.3);
+            border-radius: 30px;
+            color: #ef4444;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 7px 16px;
+            height: auto;
+            width: auto;
+            margin: 0;
+            transition: all 0.25s;
+        }
+
+        .app-nav-logout:hover {
+            background: rgba(239,68,68,0.1);
+            border-color: rgba(239,68,68,0.5);
+            color: #f87171;
+        }
+
+        /* Page body with nav offset */
+        .page-with-nav {
+            padding-top: 96px;
+        }
+
+        /* Dashboard content */
+        .dashboard-hero {
+            text-align: center;
+            padding: 40px 20px 20px;
+            width: 90%;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .dashboard-hero h1 {
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.15;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, #fff 40%, rgba(255,255,255,0.5));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dashboard-hero p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.45);
+            line-height: 1.7;
+        }
+    </style>
 </head>
 <body>
-    <div class="home">
-        <div class="rectangle">
-            <div class="left">
-                <img src="https://res.cloudinary.com/dswdzotlp/image/upload/v1741974730/Group_6_gjgpla.png" class="left">
+<div id="nav-top-mask" style="position:fixed;top:0;left:0;right:0;height:16px;background:#080c14;z-index:999;pointer-events:none;"></div>
+    <div class="bg-glow-container">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+    <div class="bg-grid-overlay"></div>
+
+    <!-- Floating App Navbar -->
+    <nav class="app-navbar" id="appNavbar">
+        <a href="home.html" class="app-navbar-brand">
+            <img src="logo_transparent.png" alt="WriteID Logo">
+            <span class="brand-name">WriteID</span>
+        </a>
+        <div class="app-navbar-right" id="nav-menu">
+            <!-- Filled by script.js -->
+        </div>
+    </nav>
+
+    <div class="home page-with-nav">
+        <div class="dashboard-hero">
+            <h1>What would you like to analyze?</h1>
+            <p>Choose a module below to get started with your handwriting or signature analysis.</p>
+        </div>
+
+        <div class="center dashboard-grid">
+            <div class="dashboard-card">
+                <div class="dashboard-icon"><i class="bi bi-pen"></i></div>
+                <h2>Writer Identification</h2>
+                <p>Compare handwriting specimens using a hybrid Deep Learning Siamese model to verify writer identity.</p>
+                <a href="upload.html" class="small dashboard-btn">Compare Handwriting</a>
             </div>
-            <div class="right">
-                <h1>WriteID</h1>
+            <div class="dashboard-card">
+                <div class="dashboard-icon"><i class="bi bi-journal-check"></i></div>
+                <h2>Signature Verification</h2>
+                <p>Verify signature specimens to detect genuine entries, simulated forge attempts, and traced overlays.</p>
+                <a href="signature.html" class="small dashboard-btn">Verify Signature</a>
             </div>
         </div>
-        <div class="center">
-            <div class="one">
-                <img src="https://res.cloudinary.com/dswdzotlp/image/upload/v1741976598/WhatsApp_Image_2025-03-11_at_01.35.43_3af7b099_1_j3gf4h.png" class="one">
-            </div>
-            <div class="two">
-                <h2>Transforming handwriting<br>into digital brillance </h2>
-                <div class="small">Get start</div>
-                <h3>Get your Result</h3>
-            </div>
-        </div>
-        <div class="footer">
-            <div class="quots">Handwriting<br>Recognition</div>
-            <div class="summary">We will detect<br>who are you</div>
+
+        <div class="footer" style="border-top:1px solid rgba(255,255,255,0.05); margin-top:auto; padding-top:32px;">
+            <div class="quots">WriteID</div>
+            <div style="font-size:13px; color:rgba(255,255,255,0.2);">&copy; 2025 WriteID &middot; AI Handwriting Intelligence</div>
         </div>
     </div>
+
+    <script src="script.js"></script>
+    <script>
+        const navbar = document.getElementById('appNavbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 30);
+        });
+    </script>
 </body>
 </html>
-
-<script src="script.js"></script>
