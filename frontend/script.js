@@ -45,12 +45,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
             `;
             let linksHtml = "";
-            if (currentPage === "upload.html" || currentPage === "signature.html") {
-                linksHtml = `<a href="home.html" class="nav-link">Home</a> <a href="profile.html" class="nav-link">Profile</a>`;
+            if (currentPage === "upload.html") {
+                linksHtml = `<a href="home.html" class="nav-link">Home</a> <a href="signature.html" class="nav-link">Signature</a> <a href="profile.html" class="nav-link">Profile</a>`;
+            } else if (currentPage === "signature.html") {
+                linksHtml = `<a href="home.html" class="nav-link">Home</a> <a href="upload.html" class="nav-link">Handwriting</a> <a href="profile.html" class="nav-link">Profile</a>`;
             } else if (currentPage === "profile.html") {
-                linksHtml = `<a href="home.html" class="nav-link">Home</a> <a href="upload.html" class="nav-link">Upload</a>`;
+                linksHtml = `<a href="home.html" class="nav-link">Home</a> <a href="upload.html" class="nav-link">Handwriting</a> <a href="signature.html" class="nav-link">Signature</a>`;
             } else if (currentPage === "home.html") {
-                linksHtml = `<a href="profile.html" class="nav-link">Profile</a> <a href="upload.html" class="nav-link">Upload</a>`;
+                linksHtml = `<a href="upload.html" class="nav-link">Handwriting</a> <a href="signature.html" class="nav-link">Signature</a> <a href="profile.html" class="nav-link">Profile</a>`;
             }
             navMenuEl.innerHTML = linksHtml + statusHtml;
         } else {
@@ -92,6 +94,30 @@ document.addEventListener("DOMContentLoaded", function () {
             appNavbar.classList.toggle("scrolled", window.scrollY > 40);
         });
     }
+
+    // Password visibility toggle helper
+    document.querySelectorAll(".password-toggle-btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const wrapper = this.closest(".password-input-wrapper");
+            const input = wrapper ? wrapper.querySelector("input") : null;
+            if (input) {
+                const icon = this.querySelector("i");
+                if (input.type === "password") {
+                    input.type = "text";
+                    if (icon) {
+                        icon.classList.remove("bi-eye-slash");
+                        icon.classList.add("bi-eye");
+                    }
+                } else {
+                    input.type = "password";
+                    if (icon) {
+                        icon.classList.remove("bi-eye");
+                        icon.classList.add("bi-eye-slash");
+                    }
+                }
+            }
+        });
+    });
 
     // Populate Profile Page details if on profile page
     if (currentPage === "profile.html") {
@@ -145,7 +171,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     localStorage.setItem("writeid_user_name", data.username);
                     navigateTo("home.html");
                 } else {
-                    if (errorEl) errorEl.innerText = data.error || "Login failed.";
+                    if (errorEl) {
+                        let msg = data.error || "Login failed.";
+                        if (msg.includes("Invalid") || msg.includes("invalid")) {
+                            msg += " (Note: If you recently deployed/restarted the server, the database may have reset. Please Register a new account first.)";
+                        }
+                        errorEl.innerText = msg;
+                    }
                 }
             } catch (error) {
                 console.error("Login Error:", error);

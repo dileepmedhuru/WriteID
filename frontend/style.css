@@ -557,6 +557,38 @@ button:hover {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-input-wrapper input {
+    padding-right: 46px !important;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: color 0.2s ease;
+    z-index: 10;
+}
+
+.password-toggle-btn:hover {
+    color: #ffffff;
+}
+
+
 .auth-btn {
     height: 48px;
     width: 100%;
