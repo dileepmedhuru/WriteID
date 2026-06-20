@@ -13,20 +13,56 @@ UPLOAD_FOLDER = os.environ.get("UPLOAD_FOLDER", "/tmp/writeid_uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+# Try loading psycopg2 for PostgreSQL on Render
+try:
+    import psycopg2
+    HAS_POSTGRES = True
+except ImportError:
+    HAS_POSTGRES = False
+
+def get_db_connection():
+    db_url = os.environ.get("DATABASE_URL")
+    if db_url and HAS_POSTGRES:
+        # Use PostgreSQL on Render
+        conn = psycopg2.connect(db_url)
+        return conn, "%s"
+    else:
+        # Fallback to local SQLite
+        conn = sqlite3.connect("users.db")
+        return conn, "?"
+
 def init_db():
     conn = None
     try:
-        conn = sqlite3.connect("users.db")
-        cursor = conn.cursor()
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE NOT NULL,
-                email TEXT UNIQUE NOT NULL,
-                password TEXT NOT NULL
-            )
-        """)
-        conn.commit()
+        db_url = os.environ.get("DATABASE_URL")
+        if db_url and HAS_POSTGRES:
+            conn = psycopg2.connect(db_url)
+            cursor = conn.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id SERIAL PRIMARY KEY,
+                    username VARCHAR(100) UNIQUE NOT NULL,
+                    email VARCHAR(100) UNIQUE NOT NULL,
+                    password VARCHAR(255) NOT NULL
+                )
+            """)
+            conn.commit()
+            print("[INFO] PostgreSQL database initialized.")
+        else:
+            conn = sqlite3.connect("users.db")
+            cursor = conn.cursor()
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT UNIQUE NOT NULL,
+                    email TEXT UNIQUE NOT NULL,
+                    password TEXT NOT NULL
+                )
+            """)
+            conn.commit()
+            print("[INFO] SQLite database initialized.")
+    except Exception as e:
+        print(f"[ERROR] Database init failed: {e}")
     finally:
         if conn:
             conn.close()
@@ -61,15 +97,16 @@ def signup():
     
     conn = None
     try:
-        conn = sqlite3.connect("users.db")
+        conn, placeholder = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", (username, email, password_hash))
+        cursor.execute(f"INSERT INTO users (username, email, password) VALUES ({placeholder}, {placeholder}, {placeholder})", (username, email, password_hash))
         conn.commit()
         return jsonify({"success": True, "message": "User registered successfully!"})
-    except sqlite3.IntegrityError:
-        return jsonify({"error": "Username or Email already registered"}), 400
     except Exception as e:
-        return jsonify({"error": f"Database error: {str(e)}"}), 500
+        err_msg = str(e)
+        if "UNIQUE" in err_msg or "unique" in err_msg or "duplicate key" in err_msg:
+            return jsonify({"error": "Username or Email already registered"}), 400
+        return jsonify({"error": f"Database error: {err_msg}"}), 500
     finally:
         if conn:
             conn.close()
@@ -87,9 +124,9 @@ def login():
     
     conn = None
     try:
-        conn = sqlite3.connect("users.db")
+        conn, placeholder = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT password, username FROM users WHERE email = ?", (email,))
+        cursor.execute(f"SELECT password, username FROM users WHERE email = {placeholder}", (email,))
         row = cursor.fetchone()
         
         if row and row[0] == password_hash:
