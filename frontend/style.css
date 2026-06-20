@@ -579,7 +579,7 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 14px;
     transition: color 0.2s ease;
     z-index: 10;
 }
